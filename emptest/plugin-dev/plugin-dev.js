@@ -1,4 +1,4 @@
-videojs.plugin('pluginDev', function(options) {
+videojs.registerPlugin('pluginDev', function(options) {
   var player = this,
   overlay = document.createElement('p');
   overlay.className = 'vjs-overlay';

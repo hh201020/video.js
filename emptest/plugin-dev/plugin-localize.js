@@ -1,4 +1,4 @@
-videojs.plugin('pluginLocalize', function() {
+videojs.registerPlugin('pluginLocalize', function() {
   videojs.addLanguage('de', {
       "Hello": "Guten Tag",
       "Goodbye": "Auf Wiedersehen",
