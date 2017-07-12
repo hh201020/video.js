@@ -38,7 +38,11 @@
   </video>
 
   <script type="text/javascript" src="plugin-dev.js"></script>
-  <script>videojs('vid1').pluginDev();</script>
+  <script>
+    var options = {"overlayText": "This data supplied at initialization"};
+    videojs('vid1').pluginDev(options);
+  </script>
+
   <script>
     var vid = document.getElementById("vid1");
     var player = videojs(vid);
