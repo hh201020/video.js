@@ -10,6 +10,8 @@
   <!-- Load the source files -->
   <link href="../../build/temp/video-js.css" rel="stylesheet" type="text/css">
   <link href="plugin-dev.css" rel="stylesheet">
+  <link href="plugin-localize.css" rel="stylesheet">
+
   <script src="../../dist/video.js"></script>
   <script src="../../node_modules/videojs-flash/dist/videojs-flash.js"></script>
 
@@ -39,11 +41,14 @@
 
   <script type="text/javascript" src="plugin-dev.js"></script>
   <script type="text/javascript" src="plugin-navigateOnVideoEnd.js"></script>
+  <script type="text/javascript" src="plugin-localize.js"></script>
+
   <script>
     var options = {"overlayText": "This data supplied at initialization",
                    "redirectURL": "http://docs.brightcove.com"};
     videojs('vid1').pluginDev(options);
     videojs('vid1').navigateOnVideoEnd(options);
+    videojs('vid1').pluginLocalize();
   </script>
 
   <script>
