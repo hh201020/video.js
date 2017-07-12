@@ -38,9 +38,12 @@
   </video>
 
   <script type="text/javascript" src="plugin-dev.js"></script>
+  <script type="text/javascript" src="plugin-navigateOnVideoEnd.js"></script>
   <script>
-    var options = {"overlayText": "This data supplied at initialization"};
+    var options = {"overlayText": "This data supplied at initialization",
+                   "redirectURL": "http://docs.brightcove.com"};
     videojs('vid1').pluginDev(options);
+    videojs('vid1').navigateOnVideoEnd(options);
   </script>
 
   <script>
