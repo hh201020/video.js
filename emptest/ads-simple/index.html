@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Video.js Sandbox</title>
+
+  <!-- Add ES5 shim and sham for IE8 -->
+  <script src="../../dist/ie8/videojs-ie8.js"></script>
+
+  <!-- Load the source files -->
+  <link href="../dist/css/video-js.css" rel="stylesheet" type="text/css">
+  <link href="../dist/css/videojs.add.css" rel="stylesheet">
+
+  <script src="../dist/js/video.js"></script>
+  <script src="../dist/js/videojs.ads.js"></script>
+  <script src="../../node_modules/videojs-flash/dist/videojs-flash.js"></script>
+
+  <!-- Set the location of the flash SWF -->
+  <script>
+    videojs.options.flash.swf = '../../node_modules/videojs-flash/node_modules/videojs-swf/dist/video-js.swf';
+  </script>
+
+</head>
+<body>
+  <div style="background-color:#eee; border: 1px solid #777; padding: 10px; margin-bottom: 20px; font-size: .8em; line-height: 1.5em; font-family: Verdana, sans-serif;">
+    <p>You can use /sandbox/ for writing and testing your own code. Nothing in /sandbox/ will get checked into the repo, except files that end in .example (so don't edit or add those files). To get started make a copy of index.html.example and rename it to index.html.</p>
+    <pre>cp sandbox/index.html.example sandbox/index.html</pre>
+    <pre>npm run start</pre>
+    <pre>open http://localhost:9999/sandbox/index.html</pre>
+  </div>
+
+  <video id="vid1" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264"
+      poster="/emptest/posters/Washington_Crossing_the_Delaware_by_Emanuel_Leutze,_MMA-NYC,_1851.jpg"
+      data-setup='{}'>
+    <source src="/emptest/contents/JackieEvanchoNationalAnthemAtInaugurationDay.mp4" type="video/mp4">
+    <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
+    <source src="http://vjs.zencdn.net/v/oceans.ogv" type="video/ogg">
+    <track kind="captions" src="../../docs/examples/shared/example-captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+  </video>
+
+  <script type="text/javascript">
+    videojs('vid1').one('loadedmetadata', function(){
+      var myPlayer = this;
+      // Initialize the ad framework, ads() is a plugin
+      // myPlayer.ads();
+      myPlayer.ads({
+        "timeout": 3000,
+        "debug": true
+      });
+      
+      // request ads whenever there's new video content
+      myPlayer.on('contentupdate', function(){
+        // fetch ad inventory asynchronously, then ...
+        myPlayer.trigger('adsready');
+      });
+
+      myPlayer.on('readyforpreroll', function() {
+        myPlayer.ads.startLinearAdMode();
+        // play your linear ad content
+        myPlayer.src('/emptest/TheUSConstitutionPreamble.mp4');
+        myPlayer.one('durationchange', function(){
+          myPlayer.play();
+        });
+        // when all your linear ads have finished...
+        myPlayer.one('ended', function() {
+          myPlayer.ads.endLinearAdMode();
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
