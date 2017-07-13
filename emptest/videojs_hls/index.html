@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Video.js HLS</title>
+
+  <link href="../dist/css/video-js.css" rel="stylesheet" type="text/css">
+  <link href="../dist/css/videojs.ads.css" rel="stylesheet">
+
+  <script src="../dist/js/video.js"></script>
+  <script src="../dist/js/videojs-contrib-hls.js"></script>
+  <script src="../dist/js/videojs.ads.js"></script>
+
+</head>
+<body>
+  <div style="background-color:#eee; border: 1px solid #777; padding: 10px; margin-bottom: 20px; font-size: .8em; line-height: 1.5em; font-family: Verdana, sans-serif;">
+    <p>You can use /sandbox/ for writing and testing your own code. Nothing in /sandbox/ will get checked into the repo, except files that end in .example (so don't edit or add those files). To get started make a copy of index.html.example and rename it to index.html.</p>
+    <pre>cp sandbox/index.html.example sandbox/index.html</pre>
+    <pre>npm run start</pre>
+    <pre>open http://localhost:9999/sandbox/index.html</pre>
+  </div>
+
+  <video id="vid1" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264"
+      poster="/emptest/posters/Washington_Crossing_the_Delaware_by_Emanuel_Leutze,_MMA-NYC,_1851.jpg"
+      data-setup='{}'>
+    <source src="https://vhost-stage.ntd.tv/2017/0713/5967c47946e0fb0005395a65/playlist.m3u8" type="application/x-mpegURL">
+    <track kind="captions" src="/emptest/contents/JackieEvanchoNationalAnthemAtInaugurationDay.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+  </video>
+
+</body>
+</html>
