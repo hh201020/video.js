@@ -293,6 +293,12 @@ class TextTrackSettings extends ModalDialog {
     }
   }
 
+  dispose() {
+    this.endDialog = null;
+
+    super.dispose();
+  }
+
   /**
    * Create a <select> element with configured options.
    *
@@ -428,7 +434,7 @@ class TextTrackSettings extends ModalDialog {
    */
   createElFont_() {
     return createEl('div', {
-      className: 'vjs-track-settings-font">',
+      className: 'vjs-track-settings-font',
       innerHTML: [
         '<fieldset class="vjs-font-percent vjs-track-setting">',
         this.createElSelect_('fontPercent', '', 'legend'),

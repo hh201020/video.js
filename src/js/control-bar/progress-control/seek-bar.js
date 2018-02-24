@@ -7,6 +7,7 @@ import {IE_VERSION, IS_IOS, IS_ANDROID} from '../../utils/browser.js';
 import * as Dom from '../../utils/dom.js';
 import * as Fn from '../../utils/fn.js';
 import formatTime from '../../utils/format-time.js';
+import {silencePromise} from '../../utils/promise';
 
 import './load-progress-bar.js';
 import './play-progress-bar.js';
@@ -174,6 +175,12 @@ class SeekBar extends Slider {
    * @listens mousedown
    */
   handleMouseDown(event) {
+    if (!Dom.isSingleLeftClick(event)) {
+      return;
+    }
+
+    // Stop event propagation to prevent double fire in progress-control.js
+    event.stopPropagation();
     this.player_.scrubbing(true);
 
     this.videoWasPlaying = !this.player_.paused();
@@ -191,6 +198,10 @@ class SeekBar extends Slider {
    * @listens mousemove
    */
   handleMouseMove(event) {
+    if (!Dom.isSingleLeftClick(event)) {
+      return;
+    }
+
     let newTime = this.calculateDistance(event) * this.player_.duration();
 
     // Don't let video end while scrubbing.
@@ -235,9 +246,20 @@ class SeekBar extends Slider {
   handleMouseUp(event) {
     super.handleMouseUp(event);
 
+    // Stop event propagation to prevent double fire in progress-control.js
+    event.stopPropagation();
     this.player_.scrubbing(false);
+
+    /**
+     * Trigger timeupdate because we're done seeking and the time has changed.
+     * This is particularly useful for if the player is paused to time the time displays.
+     *
+     * @event Tech#timeupdate
+     * @type {EventTarget~Event}
+     */
+    this.player_.trigger({ type: 'timeupdate', target: this, manuallyTriggered: true });
     if (this.videoWasPlaying) {
-      this.player_.play();
+      silencePromise(this.player_.play());
     }
   }
 

@@ -216,6 +216,7 @@ let _supportsPassive = false;
     });
 
     window.addEventListener('test', null, opts);
+    window.removeEventListener('test', null, opts);
   } catch (e) {
     // disregard
   }
@@ -344,16 +345,16 @@ export function off(elem, type, fn) {
   }
 
   // Utility function
-  const removeType = function(t) {
+  const removeType = function(el, t) {
     data.handlers[t] = [];
-    _cleanUpEvents(elem, t);
+    _cleanUpEvents(el, t);
   };
 
   // Are we removing all bound events?
   if (type === undefined) {
     for (const t in data.handlers) {
       if (Object.prototype.hasOwnProperty.call(data.handlers || {}, t)) {
-        removeType(t);
+        removeType(elem, t);
       }
     }
     return;
@@ -368,7 +369,7 @@ export function off(elem, type, fn) {
 
   // If no listener was provided, remove all listeners for type
   if (!fn) {
-    removeType(type);
+    removeType(elem, type);
     return;
   }
 
